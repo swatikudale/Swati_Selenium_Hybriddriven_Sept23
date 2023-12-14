@@ -1,7 +1,14 @@
 package base;
 
+import java.io.File;
+import java.io.IOException;
+
+import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.By;
+
 import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -136,4 +143,17 @@ public abstract class ControlActions {
 	protected String getCurrentURL() {
 		return driver.getCurrentUrl();
 	}
+	
+	public static void takeScreenshot(String fileName) {
+		TakesScreenshot ts = (TakesScreenshot) driver; // takes screenshot
+		File sourceFile = ts.getScreenshotAs(OutputType.FILE);//outype will generate file and keep it in memory
+		//coping the file from memory to folder
+		try {
+			FileUtils.copyFile(sourceFile, new File(".//screenshots/"+fileName+".png"));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+
 }

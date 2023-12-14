@@ -3,32 +3,18 @@ package testscripts;
 import java.io.IOException;
 
 import org.testng.Assert;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
-import base.ControlActions;
-import pages.LoginPage;
 import utility.ExcelOperations;
 
-public class LoginTest {
-
-	LoginPage loginPage;
-
-	@BeforeMethod
-	public void setUp() {
-		ControlActions.lounchBrowser();
-		loginPage = new LoginPage();
-	}
+public class LoginTest extends Testbase {
 
 	@Test
 	public void verifyLogin() {
-		loginPage.logIn("swatikudale92@gmail.com", "Swati@1592");
-
+		loginPage.logIn("swatikudale92@gmail.com", "Swati@1592321");
 		Boolean loginFlag = loginPage.isLoginSuccessFullyDisplayed();
 		Assert.assertTrue(loginFlag);
-
 	}
 
 	@Test
@@ -93,7 +79,7 @@ public class LoginTest {
 			System.out.println("Login Successfully toast message displayed");
 			loginFlag = loginPage.isLoginSuccessFullyDisplayed();
 			Assert.assertTrue(loginFlag, "Login Successfully");
-			
+
 			System.out.println("Login Successfull hence redirecting to dashboard page");
 			currentURL = loginPage.getCurrentURL();
 			Assert.assertTrue(currentURL.endsWith("dashboard/dash"));
@@ -120,10 +106,5 @@ public class LoginTest {
 	@DataProvider
 	public Object[][] readExceldata() throws IOException {
 		return ExcelOperations.readExcel(".//testData/LoginData.xlsx", "Login");
-	}
-
-	@AfterMethod
-	public void closeBrowser() {
-		ControlActions.closeBrowser();
 	}
 }
